@@ -37,7 +37,7 @@ export const authApi = createApi({
           if (data.user) {
             const userWithId = {
               ...data.user,
-              id: data.user._id, // 🔥 add this
+              id: data.user._id,
             };
 
             dispatch(userLoggedIn(userWithId));
@@ -70,7 +70,11 @@ export const authApi = createApi({
         try {
           const { data } = await queryFulfilled;
           if (data.user) {
-            dispatch(userLoggedIn(data.user));
+            const userWithId = {
+              ...data.user,
+              id: data.user._id,
+            };
+            dispatch(userLoggedIn(userWithId));
           }
         } catch (err) {
           console.error("Login failed", err);
