@@ -22,7 +22,7 @@ export default function CourseTable() {
         ? "bg-gray-900 text-white"
         : "bg-gray-950 text-white";
 
-  const { data, isLoading } = useGetAllCourseQuery({});
+  const { data, isLoading } = useGetAllCourseQuery();
   console.log("table data", data);
 
   if (isLoading) return <div>Loading...</div>;

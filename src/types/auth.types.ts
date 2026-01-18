@@ -47,6 +47,7 @@ export type EnrolledCourse = {
 };
 
 type Course = {
+  description: any;
   _id: string;
   courseTitle: string;
   courseDescription: string;

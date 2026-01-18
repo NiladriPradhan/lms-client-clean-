@@ -35,7 +35,12 @@ export const authApi = createApi({
         try {
           const { data } = await queryFulfilled;
           if (data.user) {
-            dispatch(userLoggedIn(data.user));
+            const userWithId = {
+              ...data.user,
+              id: data.user._id, // 🔥 add this
+            };
+
+            dispatch(userLoggedIn(userWithId));
           }
         } catch (err) {
           console.error("Login failed", err);

@@ -1,5 +1,3 @@
-import { useContext, useEffect } from "react";
-
 import {
   Sheet,
   SheetClose,
@@ -36,6 +34,7 @@ import { toast } from "sonner";
 import { useAppSelector } from "@/hooks";
 import type { RootState } from "@/store";
 import { useTheme } from "@/context/useTheme";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const navigate = useNavigate();

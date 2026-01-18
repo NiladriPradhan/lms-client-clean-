@@ -57,7 +57,7 @@ export default function EditCourse() {
   useEffect(() => {
     if (!course) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setInput<InputData>({
+    setInput({
       courseTitle: course.courseTitle ?? "",
       subTitle: course.subTitle ?? "",
       description: course.description ?? "",
@@ -117,7 +117,11 @@ export default function EditCourse() {
 
       toast.success(res.message);
     } catch (error) {
-      toast.error("Failed to update publish status", error);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Failed to update publish status");
+      }
     }
   };
 
@@ -315,3 +319,8 @@ export default function EditCourse() {
     </div>
   );
 }
+
+// const getErrorMessage = (error: unknown) => {
+//   if (error instanceof Error) return error.message;
+//   return "Something went wrong";
+// }

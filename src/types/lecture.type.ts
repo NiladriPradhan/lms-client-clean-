@@ -1,10 +1,3 @@
-import type {
-  JSXElementConstructor,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
-} from "react";
-
 // export type TLecture = {
 //   _id: string | number;
 //   lectureTitle:

@@ -145,7 +145,6 @@ const Login = () => {
           name: loginData?.user?.name || "",
           email: loginData?.user?.email || "",
           role: loginInput.role,
-          bio: loginData?.user?.bio,
           photoUrl: loginData?.user?.photoUrl,
         }),
       );
