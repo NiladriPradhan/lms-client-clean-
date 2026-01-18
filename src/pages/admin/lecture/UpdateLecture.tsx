@@ -16,7 +16,7 @@ import {
 } from "@/features/api/courseApi";
 import { getRTKErrorMessage } from "@/error/getRTKErrorMessage ";
 
-const MEDIA_API = "http://localhost:5000/api/v1/media";
+const MEDIA_API = import.meta.env.VITE_API_URL + "/api/v1/media";
 
 type UploadVideoInfo = {
   videoUrl: string;
