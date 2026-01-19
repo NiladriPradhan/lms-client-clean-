@@ -207,7 +207,10 @@ export const courseApi = createApi({
     }),
     /* ================= LECTURES ================= */
 
-    createLecture: builder.mutation({
+    createLecture: builder.mutation<
+      { success: boolean; message: string },
+      { lectureTitle: string; courseId: string }
+    >({
       query: ({ lectureTitle, courseId }) => ({
         url: `/${courseId}/lecture`,
         method: "POST",

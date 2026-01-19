@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import LectureComp from "@/components/LectureComp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +22,7 @@ export type TLecture = {
 
 export default function Lecture() {
   const navigate = useNavigate();
-  const courseId = useParams().courseId;
+  const courseId = useParams().courseId as string;
 
   const { theme } = useTheme();
 
@@ -51,34 +52,66 @@ export default function Lecture() {
 
   const handleLectureCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!lectureTitle.trim()) {
+      toast.error("Lecture title is required");
+      return;
+    }
+
     await createLecture({ lectureTitle, courseId });
   };
+
+  if (createLectureSuccess) {
+    setLectureTitle("");
+    refetch();
+    toast.success(data.message ?? "Lecture created successfully");
+  }
+
+  // useEffect(() => {
+  //   if (createLectureSuccess) {
+  //     refetch();
+  //     toast.success(data.message ?? "Lecture created successfully");
+  //   }
+  //   if (createLectureError && "data" in createLectureError) {
+  //     const errMsg =
+  //       typeof createLectureError.data === "object" &&
+  //       createLectureError.data !== null &&
+  //       "message" in createLectureError.data
+  //         ? (createLectureError.data as { message: string }).message
+  //         : "Failed to course update";
+
+  //     toast.error(errMsg);
+  //   }
+  //   if (lectureError && "data" in lectureError) {
+  //     const errMsg =
+  //       typeof lectureError.data === "object" &&
+  //       lectureError.data !== null &&
+  //       "message" in lectureError.data
+  //         ? (lectureError.data as { message: string }).message
+  //         : "Failed to fetch lectures";
+
+  //     toast.error(errMsg);
+  //   }
+  // }, [data, createLectureSuccess, createLectureError, lectureError, refetch]);
+
   useEffect(() => {
     if (createLectureSuccess) {
+      setLectureTitle("");
       refetch();
-      toast.success(data.message ?? "Lecture created successfully");
+      toast.success(data?.message ?? "Lecture created successfully");
     }
+
     if (createLectureError && "data" in createLectureError) {
       const errMsg =
         typeof createLectureError.data === "object" &&
         createLectureError.data !== null &&
         "message" in createLectureError.data
           ? (createLectureError.data as { message: string }).message
-          : "Failed to course update";
+          : "Failed to create lecture";
 
       toast.error(errMsg);
     }
-    if (lectureError && "data" in lectureError) {
-      const errMsg =
-        typeof lectureError.data === "object" &&
-        lectureError.data !== null &&
-        "message" in lectureError.data
-          ? (lectureError.data as { message: string }).message
-          : "Failed to fetch lectures";
-
-      toast.error(errMsg);
-    }
-  }, [data, createLectureSuccess, createLectureError, lectureError, refetch]);
+  }, [createLectureSuccess, createLectureError, refetch, data?.message]);
 
   const themeClasses =
     theme === "light"
@@ -91,7 +124,7 @@ export default function Lecture() {
       <div className={`${themeClasses}`}>
         <div className="flex flex-col mb-4">
           <h2 className="text-2xl font-semibold">
-            Let's add lecture, add some basic details for your new lecture. -{" "}
+            Let's,, add lecture, add some basic details for your new lecture. -{" "}
             {course?.courseTitle}
           </h2>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
