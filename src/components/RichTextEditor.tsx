@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useQuill } from "react-quilljs";
-import "quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import type { InputData } from "@/types/auth.types";
 
 type RichTextEditorProps = {
@@ -12,32 +12,21 @@ export default function RichTextEditor({
   input,
   setInput,
 }: RichTextEditorProps) {
-  const { quill, quillRef } = useQuill({
-    theme: "snow",
-  });
-
   useEffect(() => {
-    if (quill && input.description) {
-      quill.clipboard.dangerouslyPasteHTML(input.description);
-    }
-  }, [quill, input.description]);
+    // nothing else needed here
+  }, []);
 
-  useEffect(() => {
-    if (!quill) return;
-
-    const handler = () => {
-      setInput((prev) => ({
-        ...prev,
-        description: quill.root.innerHTML,
-      }));
-    };
-
-    quill.on("text-change", handler);
-
-    return () => {
-      quill.off("text-change", handler);
-    };
-  }, [quill, setInput]);
-
-  return <div ref={quillRef} className="bg-white" />;
+  return (
+    <ReactQuill
+      theme="snow"
+      value={input.description}
+      onChange={(value) =>
+        setInput((prev) => ({
+          ...prev,
+          description: value,
+        }))
+      }
+      className="bg-white"
+    />
+  );
 }
